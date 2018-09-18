@@ -4,6 +4,7 @@ require './lib/curator'
 require './lib/photograph'
 require './lib/artist'
 require 'pry'
+require "csv"
 
 class CuratorTest < MiniTest::Test
   def test_it_exists
@@ -118,5 +119,11 @@ class CuratorTest < MiniTest::Test
     @curator.add_photograph(@photo_4)
     assert_equal [@photo_2, @photo_3, @photo_4], @curator.photographs_taken_by_artists_from("United States")
     assert_equal [], @curator.photographs_taken_by_artists_from("Argentina")
+  end
+
+  def test_it_can_read_from_a_csv_file
+    curator_1 = Curator.new #I do this to seperate the csv curator from the one
+    curator_1.load_photographs('./data/photographs.csv') #I define in my setup
+    curator_1.load_artists('./data/artists.csv')
   end
 end
