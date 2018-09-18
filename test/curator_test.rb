@@ -126,4 +126,12 @@ class CuratorTest < MiniTest::Test
     curator_1.load_photographs('./data/photographs.csv') #I define in my setup
     curator_1.load_artists('./data/artists.csv')
   end
+
+  def test_it_can_find_photos_in_a_year_range
+    curator_1 = Curator.new
+    photographs = curator_1.load_photographs('./data/photographs.csv')
+    artists = curator_1.load_artists('./data/artists.csv')
+    expected = [curator_1.find_photograph_by_id("1"), curator_1.find_photograph_by_id("4")]
+    assert_equal expected, curator_1.photographs_taken_between(1950..1965)
+  end
 end

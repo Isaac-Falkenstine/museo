@@ -58,9 +58,9 @@ class Curator
         artist_id: row[:artist_id],
         year: row[:year],
       }
-      photographs << photograph_hash
+      @photographs << photo = Photograph.new(photograph_hash)
     end
-    return photographs
+    return @photographs
   end
 
   def load_artists(file)
@@ -73,8 +73,14 @@ class Curator
         died: row[:died],
         country: row[:country]
       }
-      artists << artist_hash
+      @artists << artist = Artist.new(artist_hash)
     end
-    return artists
+    return @artists
+  end
+
+  def photographs_taken_between(range)
+    @photographs.find_all do |photo|
+      range === photo.year.to_i
+    end
   end
 end
