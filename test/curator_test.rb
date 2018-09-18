@@ -134,4 +134,14 @@ class CuratorTest < MiniTest::Test
     expected = [curator_1.find_photograph_by_id("1"), curator_1.find_photograph_by_id("4")]
     assert_equal expected, curator_1.photographs_taken_between(1950..1965)
   end
+
+  def test_it_can_return_a_hash_with_age_photo_pairs
+    curator_1 = Curator.new
+    photographs = curator_1.load_photographs('./data/photographs.csv')
+    artists = curator_1.load_artists('./data/artists.csv')
+    diane_arbus = curator_1.find_artist_by_id("3")
+    expected = {44=>"Identical Twins, Roselle, New Jersey",
+                39=>"Child with Toy Hand Grenade in Central Park"}
+    assert_equal expected, curator_1.artists_photographs_by_age(diane_arbus)
+  end
 end

@@ -41,7 +41,7 @@ class Curator
 
   def photographs_taken_by_artists_from(country)
     photos_from_artist_from_country = []
-    @artists.each do |artist|
+    @artists.find_all do |artist|
       if artist.country == country
         photos_from_artist_from_country << find_photographs_by_artist(artist)
       end
@@ -81,6 +81,14 @@ class Curator
   def photographs_taken_between(range)
     @photographs.find_all do |photo|
       range === photo.year.to_i
+    end
+  end
+
+  def artists_photographs_by_age(given_artist)
+    artist_photographs = find_photographs_by_artist(given_artist)
+    artist_photographs.inject({}) do |hash, photograph|
+      hash[photograph.year.to_i - given_artist.born.to_i] = photograph.name
+      hash
     end
   end
 end
