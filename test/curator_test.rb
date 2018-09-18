@@ -117,7 +117,8 @@ class CuratorTest < MiniTest::Test
     @curator.add_artist(@artist_3)
     @curator.add_photograph(@photo_3)
     @curator.add_photograph(@photo_4)
-    assert_equal [@photo_2, @photo_3, @photo_4], @curator.photographs_taken_by_artists_from("United States")
+    actual = @curator.photographs_taken_by_artists_from("United States")
+    assert_equal [@photo_2, @photo_3, @photo_4], actual
     assert_equal [], @curator.photographs_taken_by_artists_from("Argentina")
   end
 
@@ -131,7 +132,8 @@ class CuratorTest < MiniTest::Test
     curator_1 = Curator.new
     photographs = curator_1.load_photographs('./data/photographs.csv')
     artists = curator_1.load_artists('./data/artists.csv')
-    expected = [curator_1.find_photograph_by_id("1"), curator_1.find_photograph_by_id("4")]
+    expected = [curator_1.find_photograph_by_id("1"),
+                curator_1.find_photograph_by_id("4")]
     assert_equal expected, curator_1.photographs_taken_between(1950..1965)
   end
 

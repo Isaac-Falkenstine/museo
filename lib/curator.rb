@@ -29,24 +29,21 @@ class Curator
   end
 
   def artists_with_multiple_photographs
-    artists_with_multiple_photos = []
-    @artists.each do |artist|
+    @artists.find_all do |artist|
       artist_photos = find_photographs_by_artist(artist)
       if artist_photos.length >= 2
-        artists_with_multiple_photos << artist
+        artist
       end
     end
-    artists_with_multiple_photos
   end
 
   def photographs_taken_by_artists_from(country)
-    photos_from_artist_from_country = []
-    @artists.find_all do |artist|
-      if artist.country == country
-        photos_from_artist_from_country << find_photographs_by_artist(artist)
-      end
+    artist_from_given_country = @artists.find_all do |artist|
+      artist.country == country
     end
-    photos_from_artist_from_country.flatten
+    artist_from_given_country.map do |artist|
+      find_photographs_by_artist(artist)
+    end.flatten
   end
 
   def load_photographs(file)
