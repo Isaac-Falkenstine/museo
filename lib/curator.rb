@@ -15,10 +15,16 @@ class Curator
   end
 
   def find_artist_by_id(artist_id)
-    @artists.find{|element|element.id == artist_id}
+    @artists.find{|artist|artist.id == artist_id}
   end
 
   def find_photograph_by_id(photo_id)
-    @photographs.find{|element|element.id == photo_id}
+    @photographs.find{|photograph|photograph.id == photo_id}
+  end
+
+  def find_photographs_by_artist(artist)
+    @photographs.find_all do |photograph|
+      photograph.artist_id == artist.id
+    end
   end
 end
